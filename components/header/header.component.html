@@ -1,0 +1,27 @@
+<header class="invoice-header">
+  <div class="header-container">
+    <div class="logo-section">
+      <mat-icon class="logo-icon">receipt_long</mat-icon>
+      <span class="logo-text">Invoice AI</span>
+    </div>
+
+    <nav class="nav-section">
+      <a *ngFor="let item of navItems"
+         [href]="item.href"
+         class="nav-item"
+         [class.active]="item.active"
+         (click)="setActiveItem(item)">
+        {{ item.label }}
+      </a>
+    </nav>
+
+    <div class="actions-section">
+      <button mat-icon-button matTooltip="Settings">
+        <mat-icon>settings</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Help">
+        <mat-icon>help_outline</mat-icon>
+      </button>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,24 @@
+<div class="processing-state">
+  <div class="spinner-container">
+    <mat-spinner diameter="64" color="primary"></mat-spinner>
+  </div>
+
+  <h2>Processing your document</h2>
+  <p class="subtitle">Please wait while we analyze your invoice...</p>
+
+  <div class="steps-container">
+    <div *ngFor="let step of steps; let i = index"
+         class="step-item"
+         [class.completed]="step.completed"
+         [class.current]="step.current">
+
+      <div class="step-icon">
+        <mat-icon *ngIf="step.completed">check_circle</mat-icon>
+        <mat-spinner *ngIf="step.current && !step.completed" diameter="20"></mat-spinner>
+        <mat-icon *ngIf="!step.completed && !step.current" class="pending">radio_button_unchecked</mat-icon>
+      </div>
+
+      <span class="step-text">{{ step.text }}</span>
+    </div>
+  </div>
+</div>

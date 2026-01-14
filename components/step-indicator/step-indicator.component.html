@@ -1,0 +1,19 @@
+<div class="step-indicator">
+  <div *ngFor="let step of steps; let i = index" class="step-wrapper">
+    <div class="step"
+         [class.completed]="isCompleted(i)"
+         [class.current]="isCurrent(i)"
+         [class.upcoming]="isUpcoming(i)">
+      <div class="step-circle">
+        <mat-icon *ngIf="isCompleted(i)">check</mat-icon>
+        <span *ngIf="!isCompleted(i)">{{ i + 1 }}</span>
+      </div>
+      <span class="step-label">{{ step.label }}</span>
+    </div>
+
+    <div *ngIf="i < steps.length - 1"
+         class="connector"
+         [class]="getConnectorClass(i)">
+    </div>
+  </div>
+</div>

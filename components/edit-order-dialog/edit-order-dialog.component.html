@@ -1,0 +1,218 @@
+<div class="edit-order-dialog">
+  <h2 mat-dialog-title>Edit Invoice Data</h2>
+
+  <mat-dialog-content>
+    <!-- Tab Navigation -->
+    <div class="tab-navigation">
+      <button *ngFor="let tab of tabs"
+              mat-button
+              [class.active]="activeTab === tab.id"
+              (click)="setActiveTab(tab.id)">
+        {{ tab.label }}
+      </button>
+    </div>
+
+    <!-- General Tab -->
+    <div class="tab-content" *ngIf="activeTab === 'general'">
+      <div class="form-group">
+        <label>Invoice Number</label>
+        <input matInput
+               [value]="getFieldValue('invoiceNumber')"
+               (input)="updateField('invoiceNumber', $event)" />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Invoice Date</label>
+          <input matInput
+                 [value]="getFieldValue('invoiceDate')"
+                 (input)="updateField('invoiceDate', $event)" />
+        </div>
+        <div class="form-group">
+          <label>Due Date</label>
+          <input matInput
+                 [value]="getFieldValue('dueDate')"
+                 (input)="updateField('dueDate', $event)" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Payment Terms</label>
+        <input matInput
+               [value]="getFieldValue('paymentTerms')"
+               (input)="updateField('paymentTerms', $event)" />
+      </div>
+
+      <div class="form-group">
+        <label>Delivery Address</label>
+        <textarea matInput
+                  rows="2"
+                  [value]="getFieldValue('deliveryAddress')"
+                  (input)="updateField('deliveryAddress', $event)"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Purchaser</label>
+        <input matInput
+               [value]="getFieldValue('purchaser')"
+               (input)="updateField('purchaser', $event)" />
+      </div>
+    </div>
+
+    <!-- Parties Tab -->
+    <div class="tab-content" *ngIf="activeTab === 'parties'">
+      <h3>Vendor</h3>
+      <div class="form-group">
+        <label>Name</label>
+        <input matInput
+               [value]="getFieldValue('vendor.name')"
+               (input)="updateField('vendor.name', $event)" />
+      </div>
+      <div class="form-group">
+        <label>Vendor Number</label>
+        <input matInput
+               [value]="getFieldValue('vendor.vendorNumber')"
+               (input)="updateField('vendor.vendorNumber', $event)" />
+      </div>
+      <div class="form-group">
+        <label>Address</label>
+        <textarea matInput
+                  rows="2"
+                  [value]="getFieldValue('vendor.address')"
+                  (input)="updateField('vendor.address', $event)"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Email</label>
+          <input matInput
+                 type="email"
+                 [value]="getFieldValue('vendor.email')"
+                 (input)="updateField('vendor.email', $event)" />
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input matInput
+                 [value]="getFieldValue('vendor.phone')"
+                 (input)="updateField('vendor.phone', $event)" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Tax ID</label>
+        <input matInput
+               [value]="getFieldValue('vendor.taxId')"
+               (input)="updateField('vendor.taxId', $event)" />
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <h3>Customer</h3>
+      <div class="form-group">
+        <label>Name</label>
+        <input matInput
+               [value]="getFieldValue('customer.name')"
+               (input)="updateField('customer.name', $event)" />
+      </div>
+      <div class="form-group">
+        <label>Address</label>
+        <textarea matInput
+                  rows="2"
+                  [value]="getFieldValue('customer.address')"
+                  (input)="updateField('customer.address', $event)"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Email</label>
+          <input matInput
+                 type="email"
+                 [value]="getFieldValue('customer.email')"
+                 (input)="updateField('customer.email', $event)" />
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input matInput
+                 [value]="getFieldValue('customer.phone')"
+                 (input)="updateField('customer.phone', $event)" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Tax ID</label>
+        <input matInput
+               [value]="getFieldValue('customer.taxId')"
+               (input)="updateField('customer.taxId', $event)" />
+      </div>
+    </div>
+
+    <!-- Order Lines Tab -->
+    <div class="tab-content" *ngIf="activeTab === 'lines'">
+      <div class="order-lines-table">
+        <table *ngIf="formData.tableColumns && formData.tableColumns.length > 0">
+          <thead>
+            <tr>
+              <th *ngFor="let col of formData.tableColumns">{{ col.header }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let line of formData.orderLines; let i = index">
+              <td *ngFor="let col of formData.tableColumns">
+                <input matInput
+                       [value]="line.columns && line.columns[col.key] ? line.columns[col.key].value : ''"
+                       (input)="updateOrderLine(i, col.key, $event)" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p *ngIf="!formData.tableColumns || formData.tableColumns.length === 0" class="no-columns">
+          Order lines are displayed in preview mode only.
+        </p>
+      </div>
+    </div>
+
+    <!-- Totals Tab -->
+    <div class="tab-content" *ngIf="activeTab === 'totals'">
+      <div class="form-group">
+        <label>Currency</label>
+        <input matInput
+               [value]="getFieldValue('currency')"
+               (input)="updateField('currency', $event)" />
+      </div>
+
+      <div class="form-group">
+        <label>Subtotal</label>
+        <input matInput
+               type="number"
+               [value]="getFieldValue('subtotal')"
+               (input)="updateField('subtotal', $event)" />
+      </div>
+
+      <div class="form-group">
+        <label>Tax Amount</label>
+        <input matInput
+               type="number"
+               [value]="getFieldValue('taxAmount')"
+               (input)="updateField('taxAmount', $event)" />
+      </div>
+
+      <div class="form-group">
+        <label>Total Amount</label>
+        <input matInput
+               type="number"
+               [value]="getFieldValue('totalAmount')"
+               (input)="updateField('totalAmount', $event)" />
+      </div>
+
+      <div class="form-group">
+        <label>Notes</label>
+        <textarea matInput
+                  rows="3"
+                  [value]="getFieldValue('notes')"
+                  (input)="updateField('notes', $event)"></textarea>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="onSave()">Save Changes</button>
+  </mat-dialog-actions>
+</div>

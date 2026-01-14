@@ -1,0 +1,71 @@
+.invoice-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0 24px;
+  height: 64px;
+
+  .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .logo-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .logo-icon {
+      color: #10b981;
+      font-size: 28px;
+      width: 28px;
+      height: 28px;
+    }
+
+    .logo-text {
+      font-size: 20px;
+      font-weight: 600;
+      color: #1f2937;
+    }
+  }
+
+  .nav-section {
+    display: flex;
+    gap: 8px;
+
+    .nav-item {
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #6b7280;
+      font-weight: 500;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: #f3f4f6;
+        color: #374151;
+      }
+
+      &.active {
+        background: #ecfdf5;
+        color: #059669;
+      }
+    }
+  }
+
+  .actions-section {
+    display: flex;
+    gap: 4px;
+
+    button {
+      color: #6b7280;
+
+      &:hover {
+        color: #374151;
+      }
+    }
+  }
+}

@@ -1,0 +1,100 @@
+/**
+ * Invoice AI Module - Global Styles
+ * Include this file in your main styles.scss or angular.json
+ */
+
+// Toast notification styles
+.toast-success {
+  background: #10b981 !important;
+  color: white !important;
+
+  .mat-simple-snackbar-action {
+    color: white !important;
+  }
+}
+
+.toast-error {
+  background: #ef4444 !important;
+  color: white !important;
+
+  .mat-simple-snackbar-action {
+    color: white !important;
+  }
+}
+
+.toast-info {
+  background: #3b82f6 !important;
+  color: white !important;
+
+  .mat-simple-snackbar-action {
+    color: white !important;
+  }
+}
+
+.toast-warning {
+  background: #f59e0b !important;
+  color: white !important;
+
+  .mat-simple-snackbar-action {
+    color: #1f2937 !important;
+  }
+}
+
+// Primary color overrides for Material theme
+.mat-primary {
+  background-color: #10b981 !important;
+}
+
+.mat-raised-button.mat-primary {
+  background-color: #10b981 !important;
+}
+
+// Dialog styling
+.mat-dialog-container {
+  border-radius: 12px !important;
+}
+
+// Card styling
+.mat-card {
+  border-radius: 12px !important;
+}
+
+// Form field styling
+.mat-form-field {
+  width: 100%;
+}
+
+// Invoice AI specific utilities
+.invoice-ai-container {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+// Animation keyframes
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+// Utility classes
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}

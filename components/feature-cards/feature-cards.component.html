@@ -1,0 +1,9 @@
+<div class="feature-cards">
+  <div *ngFor="let feature of features" class="feature-card">
+    <div class="feature-icon" [class]="feature.iconBg">
+      <mat-icon [class]="feature.iconColor">{{ feature.icon }}</mat-icon>
+    </div>
+    <h3>{{ feature.title }}</h3>
+    <p>{{ feature.description }}</p>
+  </div>
+</div>

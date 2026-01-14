@@ -1,0 +1,107 @@
+<div class="invoice-ai-page">
+  <!-- Header -->
+  <app-invoice-header></app-invoice-header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <!-- Step Indicator -->
+      <app-step-indicator
+        [currentStep]="currentStep"
+        [steps]="workflowSteps">
+      </app-step-indicator>
+
+      <!-- Error State -->
+      <div class="content-section" *ngIf="errorState.type">
+        <app-error-state
+          [type]="errorState.type"
+          [message]="errorState.message"
+          (retry)="handleRetry()">
+        </app-error-state>
+      </div>
+
+      <!-- Step 1: Upload -->
+      <div class="content-section" *ngIf="currentStep === 1 && !errorState.type">
+        <div class="page-header">
+          <h1>Import Invoice</h1>
+          <p>Upload your invoice document to automatically extract and convert to order data.</p>
+        </div>
+
+        <app-upload-zone
+          [disabled]="isLoading"
+          (fileSelect)="handleFileSelect($event)">
+        </app-upload-zone>
+
+        <app-feature-cards></app-feature-cards>
+      </div>
+
+      <!-- Step 2: Processing -->
+      <div class="content-section" *ngIf="currentStep === 2">
+        <app-processing-state></app-processing-state>
+      </div>
+
+      <!-- Step 3: Review -->
+      <div class="content-section review-section" *ngIf="currentStep === 3">
+        <div class="review-header">
+          <h2>Review Extracted Data</h2>
+          <p>Review and edit the extracted invoice data before confirming.</p>
+
+          <div class="tab-buttons">
+            <button mat-button
+                    [class.active]="activeTab === 'preview'"
+                    (click)="setActiveTab('preview')">
+              <mat-icon>visibility</mat-icon>
+              Preview
+            </button>
+            <button mat-button
+                    [class.active]="activeTab === 'json'"
+                    (click)="setActiveTab('json')">
+              <mat-icon>code</mat-icon>
+              JSON
+            </button>
+          </div>
+        </div>
+
+        <!-- Preview Tab -->
+        <div class="review-content" *ngIf="activeTab === 'preview'">
+          <mat-card>
+            <app-invoice-preview
+              [data]="extractedData"
+              [editable]="true"
+              (dataChange)="handleDataChange($event)"
+              (openEditDialog)="openEditDialog()">
+            </app-invoice-preview>
+          </mat-card>
+        </div>
+
+        <!-- JSON Tab -->
+        <div class="review-content" *ngIf="activeTab === 'json'">
+          <app-json-output [data]="extractedData"></app-json-output>
+        </div>
+
+        <!-- Actions -->
+        <div class="review-actions">
+          <button mat-button (click)="handleCancel()">
+            Cancel
+          </button>
+          <button mat-button color="accent" (click)="handleRegenerate()">
+            <mat-icon>refresh</mat-icon>
+            Re-analyze
+          </button>
+          <button mat-raised-button color="primary" (click)="handleConfirmOrder()">
+            <mat-icon>check</mat-icon>
+            Confirm Order
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 4: Complete -->
+      <div class="content-section" *ngIf="currentStep === 4">
+        <app-completion-state
+          [orderNumber]="orderNumber"
+          (reset)="handleReset()">
+        </app-completion-state>
+      </div>
+    </div>
+  </main>
+</div>

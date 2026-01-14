@@ -1,0 +1,76 @@
+.json-output {
+  background: #1f2937;
+  border-radius: 8px;
+  overflow: hidden;
+
+  .json-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: #111827;
+    border-bottom: 1px solid #374151;
+
+    .title {
+      font-size: 14px;
+      font-weight: 500;
+      color: #9ca3af;
+    }
+
+    .actions {
+      display: flex;
+      gap: 4px;
+
+      button {
+        color: #9ca3af;
+
+        &:hover {
+          color: #fff;
+        }
+
+        mat-icon {
+          font-size: 18px;
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+  }
+
+  .json-content {
+    padding: 16px;
+    max-height: 400px;
+    overflow: auto;
+
+    pre {
+      margin: 0;
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+      font-size: 12px;
+      line-height: 1.6;
+
+      code {
+        color: #10b981;
+        white-space: pre-wrap;
+        word-break: break-all;
+      }
+    }
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #374151;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #6b7280;
+      border-radius: 4px;
+
+      &:hover {
+        background: #9ca3af;
+      }
+    }
+  }
+}

@@ -1,0 +1,100 @@
+.invoice-ai-page {
+  min-height: 100vh;
+  background: #f9fafb;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  padding: 32px 24px;
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+}
+
+.content-section {
+  margin-top: 24px;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 32px;
+
+  h1 {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 700;
+    color: #1f2937;
+  }
+
+  p {
+    margin: 8px 0 0;
+    font-size: 16px;
+    color: #6b7280;
+  }
+}
+
+.review-section {
+  .review-header {
+    text-align: center;
+    margin-bottom: 24px;
+
+    h2 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 600;
+      color: #1f2937;
+    }
+
+    p {
+      margin: 8px 0 16px;
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .tab-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+
+      button {
+        color: #6b7280;
+
+        mat-icon {
+          margin-right: 8px;
+        }
+
+        &.active {
+          background: #ecfdf5;
+          color: #059669;
+        }
+      }
+    }
+  }
+
+  .review-content {
+    mat-card {
+      padding: 0;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .review-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e7eb;
+
+    button {
+      mat-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+}

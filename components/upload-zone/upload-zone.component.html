@@ -1,0 +1,35 @@
+<div class="upload-zone"
+     [class.dragging]="isDragging"
+     [class.disabled]="disabled">
+
+  <input type="file"
+         #fileInput
+         [accept]="acceptedTypes"
+         (change)="onFileInputChange($event)"
+         [disabled]="disabled"
+         class="file-input" />
+
+  <div class="upload-content" (click)="fileInput.click()">
+    <div class="upload-icon">
+      <mat-icon>cloud_upload</mat-icon>
+    </div>
+
+    <div class="upload-text">
+      <h3>Drop your invoice here</h3>
+      <p>or click to browse files</p>
+    </div>
+
+    <div class="supported-formats">
+      <span class="format-badge">PDF</span>
+      <span class="format-badge">Excel (.xlsx, .xls)</span>
+    </div>
+
+    <button mat-raised-button
+            color="primary"
+            [disabled]="disabled"
+            class="browse-button">
+      <mat-icon>folder_open</mat-icon>
+      Browse Files
+    </button>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<span class="editable-text" [class]="className">
+  <ng-container *ngIf="!isEditing; else editMode">
+    <span class="display-value"
+          [class.placeholder]="isPlaceholder"
+          (click)="startEditing()"
+          matTooltip="Click to edit">
+      {{ displayValue }}
+      <mat-icon class="edit-icon">edit</mat-icon>
+    </span>
+  </ng-container>
+
+  <ng-template #editMode>
+    <input #inputField
+           [type]="type"
+           [(ngModel)]="editValue"
+           [class]="inputClassName"
+           [placeholder]="placeholder"
+           (blur)="saveValue()"
+           (keydown)="onKeyDown($event)"
+           class="edit-input" />
+  </ng-template>
+</span>

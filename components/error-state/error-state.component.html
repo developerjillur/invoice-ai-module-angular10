@@ -1,0 +1,15 @@
+<div class="error-state">
+  <div class="error-icon" [class]="type">
+    <mat-icon>{{ errorIcon }}</mat-icon>
+  </div>
+
+  <h2>{{ errorTitle }}</h2>
+  <p class="error-message">{{ errorMessage }}</p>
+
+  <div class="actions">
+    <button mat-raised-button color="primary" (click)="onRetry()">
+      <mat-icon>refresh</mat-icon>
+      Try Again
+    </button>
+  </div>
+</div>

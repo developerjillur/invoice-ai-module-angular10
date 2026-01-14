@@ -1,0 +1,186 @@
+<div class="invoice-preview" *ngIf="data">
+  <!-- Header Section -->
+  <div class="preview-header">
+    <div class="document-type">
+      <mat-icon>description</mat-icon>
+      <span>{{ documentTypeLabel }}</span>
+    </div>
+    <button mat-icon-button
+            *ngIf="editable"
+            (click)="onEditClick()"
+            matTooltip="Edit all fields">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </div>
+
+  <!-- Invoice Info -->
+  <div class="info-section">
+    <div class="info-row">
+      <div class="info-item">
+        <span class="label">Invoice Number</span>
+        <app-editable-text
+          [value]="data.invoiceNumber"
+          placeholder="Enter invoice number"
+          (save)="updateField('invoiceNumber', $event)">
+        </app-editable-text>
+      </div>
+      <div class="info-item">
+        <span class="label">Invoice Date</span>
+        <app-editable-text
+          [value]="data.invoiceDate"
+          placeholder="Enter date"
+          (save)="updateField('invoiceDate', $event)">
+        </app-editable-text>
+      </div>
+      <div class="info-item" *ngIf="data.dueDate">
+        <span class="label">Due Date</span>
+        <app-editable-text
+          [value]="data.dueDate"
+          placeholder="Enter due date"
+          (save)="updateField('dueDate', $event)">
+        </app-editable-text>
+      </div>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <!-- Parties Section -->
+  <div class="parties-section">
+    <div class="party-card">
+      <h4>
+        <mat-icon>business</mat-icon>
+        Vendor
+      </h4>
+      <div class="party-details">
+        <app-editable-text
+          [value]="data.vendor.name"
+          placeholder="Vendor name"
+          className="party-name"
+          (save)="updateField('vendor.name', $event)">
+        </app-editable-text>
+        <app-editable-text
+          *ngIf="data.vendor.address"
+          [value]="data.vendor.address"
+          placeholder="Address"
+          className="party-address"
+          (save)="updateField('vendor.address', $event)">
+        </app-editable-text>
+        <app-editable-text
+          *ngIf="data.vendor.email"
+          [value]="data.vendor.email"
+          placeholder="Email"
+          className="party-contact"
+          (save)="updateField('vendor.email', $event)">
+        </app-editable-text>
+      </div>
+    </div>
+
+    <div class="party-card">
+      <h4>
+        <mat-icon>person</mat-icon>
+        Customer
+      </h4>
+      <div class="party-details">
+        <app-editable-text
+          [value]="data.customer.name"
+          placeholder="Customer name"
+          className="party-name"
+          (save)="updateField('customer.name', $event)">
+        </app-editable-text>
+        <app-editable-text
+          *ngIf="data.customer.address"
+          [value]="data.customer.address"
+          placeholder="Address"
+          className="party-address"
+          (save)="updateField('customer.address', $event)">
+        </app-editable-text>
+        <app-editable-text
+          *ngIf="data.customer.email"
+          [value]="data.customer.email"
+          placeholder="Email"
+          className="party-contact"
+          (save)="updateField('customer.email', $event)">
+        </app-editable-text>
+      </div>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <!-- Order Lines Table -->
+  <div class="order-lines-section">
+    <h4>Order Lines</h4>
+    <div class="table-container">
+      <table class="order-table" *ngIf="data.tableColumns && data.tableColumns.length > 0">
+        <thead>
+          <tr>
+            <th *ngFor="let col of data.tableColumns"
+                [class.text-right]="col.align === 'right'">
+              {{ col.header }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let line of data.orderLines; let i = index">
+            <td *ngFor="let col of data.tableColumns"
+                [class.text-right]="col.align === 'right'">
+              <app-editable-text
+                *ngIf="line.columns && line.columns[col.key]"
+                [value]="formatValue(line.columns[col.key]?.value, col.type)"
+                (save)="updateOrderLineColumn(i, col.key, $event)">
+              </app-editable-text>
+              <span *ngIf="!line.columns || !line.columns[col.key]">-</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Fallback simple table if no column definitions -->
+      <table class="order-table simple" *ngIf="!data.tableColumns || data.tableColumns.length === 0">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Description</th>
+            <th class="text-right">Qty</th>
+            <th class="text-right">Unit Price</th>
+            <th class="text-right">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let line of data.orderLines; let i = index">
+            <td>{{ line.lineNumber || i + 1 }}</td>
+            <td>{{ line.description || '-' }}</td>
+            <td class="text-right">{{ line.quantity || '-' }}</td>
+            <td class="text-right">{{ formatCurrency(line.unitPrice) }}</td>
+            <td class="text-right">{{ formatCurrency(line.totalAmount) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <!-- Totals Section -->
+  <div class="totals-section">
+    <div class="totals-row">
+      <span class="label">Subtotal</span>
+      <span class="value">{{ formatCurrency(calculatedSubtotal) }}</span>
+    </div>
+    <div class="totals-row" *ngIf="data.taxAmount !== null && data.taxAmount !== undefined">
+      <span class="label">Tax</span>
+      <span class="value">{{ formatCurrency(data.taxAmount) }}</span>
+    </div>
+    <div class="totals-row total">
+      <span class="label">Total</span>
+      <span class="value">{{ formatCurrency(calculatedTotal) }}</span>
+    </div>
+  </div>
+
+  <!-- Notes Section -->
+  <div class="notes-section" *ngIf="data.notes">
+    <h4>Notes</h4>
+    <p>{{ data.notes }}</p>
+  </div>
+</div>
